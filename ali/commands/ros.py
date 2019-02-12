@@ -48,4 +48,4 @@ def create_stack(obj, name, template_path, parameters, timeout_mins):
     client = obj["client"]
     client.do_action_with_exception(request)
 
-    click.echo("Stack %s successfully created!" % name)
+    click.echo("Stack %s successfully deployed" % name)
