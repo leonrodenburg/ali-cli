@@ -2,6 +2,7 @@ import click
 import json
 
 from aliyunsdkros.request.v20150901 import CreateStacksRequest
+from aliyunsdkros.request.v20150901 import DeleteStackRequest
 
 
 @click.group()
@@ -10,8 +11,8 @@ def ros():
 
 
 @ros.command()
-@click.option("--name", help="Stack name")
-@click.option("--template-path", help="Path to JSON template")
+@click.option("--name", help="Stack name", required=True)
+@click.option("--template-path", help="Path to JSON template", required=True)
 @click.option(
     "--parameters",
     default="",
@@ -46,6 +47,23 @@ def create_stack(obj, name, template_path, parameters, timeout_mins):
     request.set_content(json.dumps(request_body).encode())
 
     client = obj["client"]
+    response = client.do_action_with_exception(request)
+
+    click.echo("Stack '%s' successfully deployed" % name)
+    click.echo(response)
+
+
+@ros.command()
+@click.option("--name", help="Stack name", required=True)
+@click.option("--id", help="Stack ID", required=True)
+@click.pass_obj
+def delete_stack(obj, name, id):
+    """Delete an ROS stack and its resources"""
+    request = DeleteStackRequest.DeleteStackRequest()
+    request.add_path_param("StackName", name)
+    request.add_path_param("StackId", id)
+
+    client = obj["client"]
     client.do_action_with_exception(request)
 
-    click.echo("Stack %s successfully deployed" % name)
+    click.echo("Stack '%s' successfully deleted" % name)
