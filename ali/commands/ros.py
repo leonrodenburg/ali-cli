@@ -3,6 +3,10 @@ import json
 
 from aliyunsdkros.request.v20150901 import CreateStacksRequest
 from aliyunsdkros.request.v20150901 import DeleteStackRequest
+from aliyunsdkros.request.v20150901 import DescribeStacksRequest
+from aliyunsdkros.request.v20150901 import DescribeStackDetailRequest
+
+from ali.helpers.output import output_json, output_success
 
 
 @click.group()
@@ -49,21 +53,61 @@ def create_stack(obj, name, template_path, parameters, timeout_mins):
     client = obj["client"]
     response = client.do_action_with_exception(request)
 
-    click.echo("Stack '%s' successfully deployed" % name)
-    click.echo(response)
+    output_success("Stack '%s' created successfully" % name)
+    output_json(response)
 
 
 @ros.command()
 @click.option("--name", help="Stack name", required=True)
-@click.option("--id", help="Stack ID", required=True)
 @click.pass_obj
-def delete_stack(obj, name, id):
+def delete_stack(obj, name):
     """Delete an ROS stack and its resources"""
+    stack = _find_stack_by_name(obj["client"], name)
+
     request = DeleteStackRequest.DeleteStackRequest()
     request.add_path_param("StackName", name)
-    request.add_path_param("StackId", id)
+    request.add_path_param("StackId", stack["Id"])
 
     client = obj["client"]
     client.do_action_with_exception(request)
 
-    click.echo("Stack '%s' successfully deleted" % name)
+    output_success("Stack '%s' successfully deleted" % name)
+
+
+@ros.command()
+@click.pass_obj
+def describe_stacks(obj):
+    """List stacks in the current region"""
+    request = DescribeStacksRequest.DescribeStacksRequest()
+
+    client = obj["client"]
+    response = client.do_action_with_exception(request)
+
+    output_json(response)
+
+
+@ros.command()
+@click.option("--name", help="Stack name", required=True)
+@click.pass_obj
+def describe_stack(obj, name):
+    stack = _find_stack_by_name(obj["client"], name)
+
+    request = DescribeStackDetailRequest.DescribeStackDetailRequest()
+    request.add_path_param("StackName", name)
+    request.add_path_param("StackId", stack["Id"])
+
+    client = obj["client"]
+    response = client.do_action_with_exception(request)
+
+    output_json(response)
+
+
+def _find_stack_by_name(client, name):
+    stacks_request = DescribeStacksRequest.DescribeStacksRequest()
+
+    stacks_response = json.loads(client.do_action_with_exception(stacks_request))
+    stacks = list(filter(lambda s: s["Name"] == name, stacks_response["Stacks"]))
+    if len(stacks) == 0:
+        raise Exception("Could not find the specified stack")
+
+    return stacks[0]

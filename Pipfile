@@ -7,12 +7,14 @@ verify_ssl = true
 black = "*"
 pylint = "*"
 pytest = "*"
+rope = "*"
 
 [packages]
 click = "*"
 ali-cli = {editable = true,path = "."}
 aliyun-python-sdk-core = "*"
 aliyun-python-sdk-ros = "*"
+colorama = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,3 +1,4 @@
+import sys
 import click
 
 from aliyunsdkcore.client import AcsClient
@@ -6,6 +7,7 @@ from ali.commands.configure import configure
 from ali.commands.ros import ros
 
 from ali.helpers import auth
+from ali.helpers.output import output_error
 
 
 @click.group()
@@ -28,6 +30,18 @@ cli.add_command(configure)
 cli.add_command(ros)
 
 
-if __name__ == "__main__":
+def _handle_exception(e):
+    output_error(e)
+
+
+def safe_cli():
     # pylint: disable=no-value-for-parameter,unexpected-keyword-arg
-    cli(auto_envvar_prefix="ALI")
+    try:
+        cli(auto_envvar_prefix="ALI")
+    except Exception as e:
+        _handle_exception(e)
+        sys.exit()
+
+
+if __name__ == "__main__":
+    safe_cli()
