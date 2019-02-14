@@ -17,7 +17,7 @@ def cli(ctx, profile):
     """Ali CLI"""
     profile_obj = auth.extract_profile(profile)
     if not profile_obj:
-        click.echo(
+        raise Exception(
             "Could not locate credentials for Alibaba Cloud. Please run 'aliyun configure --profile <profile>' to set these up for a given profile."
         )
 
