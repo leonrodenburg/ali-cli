@@ -2,15 +2,30 @@
 
 Wraps the Alibaba Cloud SDK to make complicated tasks a lot simpler.
 
-To make this work, you will either need to use the official Aliyun CLI to configure your credentials (run `aliyun configure`) or
+## Installation
+
+There is no PyPI package yet, so you need to use [Pipenv](https://github.com/pypa/pipenv) to manually install the package in editable mode and run it:
+
+```bash
+pipenv install -e .
+pipenv shell
+ali
+```
+
+You should see the default help output with the supported commands.
+
+## Configuration
+
+To make this work, you will either need to use the official [Aliyun CLI](https://github.com/aliyun/aliyun-cli) (Python or Go) to configure your credentials.
+After you have installed the CLI, run `aliyun configure` and follow the prompts. If you don't want to install the official CLI, you can manually
 create the file `~/.aliyun/config.json` with the following contents:
 
 ```json
 {
-  "current": "default",
+  "current": "",
   "profiles": [
     {
-      "name": "default",
+      "name": "",
       "mode": "AK",
       "access_key_id": "<ACCESS_KEY_ID>",
       "access_key_secret": "<ACCESS_KEY_SECRET>",
@@ -35,3 +50,21 @@ create the file `~/.aliyun/config.json` with the following contents:
 
 Replace `<ACCESS_KEY_ID>` with your access key ID and `<ACCESS_KEY_SECRET>` with your access key secret. Optionally, you can change the region
 to the region you like (`eu-central-1` is Frankfurt).
+
+## Usage
+
+Currently, Ali CLI only supports commands related to the Resource Orchestration Service (ROS). This allows you to deploy JSON templates as stacks,
+so you can use code to define your whole infrastructure.
+
+To deploy an example bucket, run the following command:
+
+```bash
+ali ros create-stack --name ali-ros-test --template-path examples/ros/bucket.json --parameters BucketName=my-fancy-bucket
+```
+
+This will create the stack `ali-ros-test`, using the template in the `examples/ros/bucket.json` file and specifies the values to use for the
+template parameters. Feel free to modify the stack name and templates if you like.
+
+To list stacks, run `ali ros describe-stacks`. This will output all the stacks in the current region.
+
+To delete a stack, run `ali ros delete-stack --name ali-ros-test`. This will remove the stack you created above, including the provisioned resources.
