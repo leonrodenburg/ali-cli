@@ -1,5 +1,6 @@
 import click
 import json
+from pygments import highlight, lexers, formatters
 
 
 def output_success(message):
@@ -7,11 +8,17 @@ def output_success(message):
 
 
 def output_json(json):
-    click.secho(_format_response(json), fg="cyan")
+    click.secho(
+        highlight(
+            _format_response(json),
+            lexers.get_lexer_by_name("json"),
+            formatters.get_formatter_by_name("terminal"),
+        )
+    )
 
 
 def output_error(message):
-    click.secho("Error - %s" % message, fg="red", bold=True)
+    click.secho("Error: %s" % message)
 
 
 def _format_response(response):

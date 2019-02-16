@@ -17,6 +17,7 @@ ali-cli = {editable = true,path = "."}
 aliyun-python-sdk-core = ">=2.13"
 aliyun-python-sdk-ros = ">=2.2.8"
 colorama = ">=0.4.1"
+pygments = ">=2.3.1"
 
 [requires]
 python_version = "3.7"

@@ -19,6 +19,7 @@ setuptools.setup(
     install_requires=[
         "click>=7.0",
         "colorama>=0.4.1",
+        "pygments>=2.3.1",
         "aliyun-python-sdk-core>=2.13",
         "aliyun-python-sdk-ros>=2.2.8",
     ],
