@@ -4,12 +4,10 @@ Wraps the Alibaba Cloud SDK to make complicated tasks a lot simpler.
 
 ## Installation
 
-There is no PyPI package yet, so you need to use [Pipenv](https://github.com/pypa/pipenv) to manually install the package in editable mode and run it:
+Installation is easy, run the following command to install the CLI through Pip:
 
 ```bash
-pipenv install -e .
-pipenv shell
-ali
+pip install ali-cli
 ```
 
 You should see the default help output with the supported commands.
