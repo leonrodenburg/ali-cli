@@ -16,9 +16,9 @@ You should see the default help output with the supported commands.
 
 ## Configuration
 
-To make this work, you will either need to use the official [Aliyun CLI](https://github.com/aliyun/aliyun-cli) to configure your credentials
-or create the configuration manually. To use the CLI, run `aliyun configure` and follow the prompts. If you don't want to install the official
-CLI, you can manually create the file `~/.aliyun/config.json` with the following contents:
+To connect the CLI to your Alibaba Cloud account, you will either need to use the official [Aliyun CLI](https://github.com/aliyun/aliyun-cli) to
+configure your credentials or create the configuration manually. To use the CLI, run `aliyun configure` and follow the prompts. If you don't want
+to install the official CLI, you can manually create the file `~/.aliyun/config.json` with the following contents:
 
 ```json
 {

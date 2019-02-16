@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.0.1",
     author="Léon Rodenburg",
     author_email="lrodenburg@xebia.com",
-    description="Alibaba CLI wrapper to make your life easier",
+    description="Wraps the Alibaba Cloud SDK to make complicated tasks a lot simpler.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/leonrodenburg/ali-cli",
