@@ -1,5 +1,7 @@
 # Ali CLI
 
+[![PyPI version](https://badge.fury.io/py/ali-cli.svg)](https://badge.fury.io/py/ali-cli)
+
 Wraps the Alibaba Cloud SDK to make complicated tasks a lot simpler.
 
 ## Installation
