@@ -8,6 +8,8 @@ black = "*"
 pylint = "*"
 pytest = "*"
 rope = "*"
+bumpversion = "*"
+twine = "*"
 
 [packages]
 click = ">=7.0"
