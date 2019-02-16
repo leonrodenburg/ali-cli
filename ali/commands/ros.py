@@ -90,6 +90,7 @@ def describe_stacks(obj):
 @click.option("--name", help="Stack name", required=True)
 @click.pass_obj
 def describe_stack(obj, name):
+    """Get all details of a single stack, including parameters"""
     stack = _find_stack_by_name(obj["client"], name)
 
     request = DescribeStackDetailRequest.DescribeStackDetailRequest()
