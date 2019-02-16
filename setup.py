@@ -13,7 +13,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/leonrodenburg/ali-cli",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude=("tests",)),
     python_requires=">=3.5",
     entry_points={"console_scripts": ["ali = ali.cli:safe_cli"]},
     install_requires=[
