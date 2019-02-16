@@ -15,4 +15,10 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires=">=3.5",
     entry_points={"console_scripts": ["ali = ali.cli:safe_cli"]},
+    install_requires=[
+        "click>=7.0",
+        "colorama>=0.4.1",
+        "aliyun-python-sdk-core>=2.13",
+        "aliyun-python-sdk-core>=2.2.8",
+    ],
 )
