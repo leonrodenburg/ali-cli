@@ -1,5 +1,7 @@
 import click
 import json
+from ruamel.yaml import YAML
+
 
 from aliyunsdkros.request.v20150901 import CreateStacksRequest
 from aliyunsdkros.request.v20150901 import DeleteStackRequest
@@ -36,7 +38,8 @@ def ros():
 @click.pass_obj
 def create_stack(obj, name, template, parameters, timeout_mins):
     """Creates an ROS stack"""
-    template_json = template.read()
+    body = YAML(typ="safe", pure=True).load(template)
+
     template_params = {}
     for raw_param in parameters:
         if len(raw_param) > 0 and "=" in raw_param:
@@ -47,7 +50,7 @@ def create_stack(obj, name, template, parameters, timeout_mins):
     request_body = {
         "Name": name,
         "TimeoutMins": timeout_mins,
-        "Template": json.loads(template_json),
+        "Template": body,
         "Parameters": template_params,
     }
     request.set_content_type("application/json")
