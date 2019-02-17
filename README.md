@@ -12,7 +12,7 @@ Installation is easy, run the following command to install the CLI through Pip:
 pip install ali-cli
 ```
 
-You should see the default help output with the supported commands.
+Then run the CLI using the command `ali`. You should see the default help output with the supported commands.
 
 ## Configuration
 
@@ -70,3 +70,6 @@ will be read from stdin. Type or paste the template in the prompt and press Ctrl
 To list stacks, run `ali ros describe-stacks`. This will output all the stacks in the current region.
 
 To delete a stack, run `ali ros delete-stack --name ali-ros-test`. This will remove the stack you created above, including the provisioned resources.
+
+Although the Alibaba ROS API's only support JSON templates, Ali CLI can also deploy YAML templates. We do this by converting your YAML into JSON
+before creating the stack. Examples of both JSON and YAML templates can be found in the `examples/ros` directory.
