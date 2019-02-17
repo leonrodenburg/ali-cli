@@ -8,5 +8,8 @@ Resources:
   Bucket:
     Type: ALIYUN::OSS::Bucket
     Properties:
-      BucketName:
-        Ref: 'BucketName'
+      BucketName: !Ref 'BucketName'
+
+Outputs:
+  DomainName:
+    Value: !GetAtt 'Bucket.DomainName'
