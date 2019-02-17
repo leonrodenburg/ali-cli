@@ -18,10 +18,16 @@ def ros():
 
 @ros.command()
 @click.option("--name", help="Stack name", required=True)
-@click.option("--template-path", help="Path to JSON template", required=True)
+@click.option(
+    "--template",
+    help="JSON template (path or - to supply through stdin)",
+    required=True,
+    type=click.File("r"),
+)
 @click.option(
     "--parameters",
-    default="",
+    default=[],
+    multiple=True,
     help="Comma-separated list of key=val parameters to set in the template",
 )
 @click.option(
@@ -30,14 +36,12 @@ def ros():
     help="Timeout if stack was not created within specified minutes",
 )
 @click.pass_obj
-def create_stack(obj, name, template_path, parameters, timeout_mins):
+def create_stack(obj, name, template, parameters, timeout_mins):
     """Creates an ROS stack"""
-    with open(template_path, "r") as f:
-        templatet = YAML(typ='safe',pure=True).load(f)
+    body = YAML(typ='safe',pure=True).load(template)
 
     template_params = {}
-    raw_params = parameters.split(",")
-    for raw_param in raw_params:
+    for raw_param in parameters:
         if len(raw_param) > 0 and "=" in raw_param:
             key, val = raw_param.split("=")
             template_params[key] = val
@@ -46,7 +50,7 @@ def create_stack(obj, name, template_path, parameters, timeout_mins):
     request_body = {
         "Name": name,
         "TimeoutMins": timeout_mins,
-        "Template": template,
+        "Template": body,
         "Parameters": template_params,
     }
     request.set_content_type("application/json")
