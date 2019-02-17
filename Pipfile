@@ -12,7 +12,7 @@ bumpversion = "*"
 twine = "*"
 
 [packages]
-ali-cli = {path = ".",editable = true}
+ali-cli = {editable = true,path = "."}
 
 [requires]
 python_version = "3.7"

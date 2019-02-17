@@ -22,6 +22,6 @@ setuptools.setup(
         "pygments>=2.3.1",
         "aliyun-python-sdk-core>=2.13",
         "aliyun-python-sdk-ros>=2.2.8",
-        "ruamel.yaml",
+        "ruamel.yaml>=0.15.88",
     ],
 )
