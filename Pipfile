@@ -19,3 +19,8 @@ python_version = "3.7"
 
 [pipenv]
 allow_prereleases = true
+
+[scripts]
+publish-patch = "sh ./scripts/publish.sh patch"
+publish-minor = "sh ./scripts/publish.sh minor"
+publish-major = "sh ./scripts/publish.sh major"
