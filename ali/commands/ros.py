@@ -38,7 +38,7 @@ def ros():
 @click.pass_obj
 def create_stack(obj, name, template, parameters, timeout_mins):
     """Creates an ROS stack"""
-    body = YAML(typ='safe',pure=True).load(template)
+    body = YAML(typ="safe", pure=True).load(template)
 
     template_params = {}
     for raw_param in parameters:
