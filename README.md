@@ -59,11 +59,13 @@ so you can use code to define your whole infrastructure.
 To deploy an example bucket, run the following command:
 
 ```bash
-ali ros create-stack --name ali-ros-test --template-path examples/ros/bucket.json --parameters BucketName=my-fancy-bucket
+ali ros create-stack --name ali-ros-test --template examples/ros/bucket.json --parameters BucketName=my-fancy-bucket
 ```
 
 This will create the stack `ali-ros-test`, using the template in the `examples/ros/bucket.json` file and specifies the values to use for the
-template parameters. Feel free to modify the stack name and templates if you like.
+template parameters. You can specify multiple parameters if necessary by repeating the `--parameters <key>=<val>` option as many times as you need.
+Feel free to modify the stack name and templates if you like. You can also specify `-` for the template, which means that it
+will be read from stdin. Type or paste the template in the prompt and press Ctrl-D to send it into the CLI.
 
 To list stacks, run `ali ros describe-stacks`. This will output all the stacks in the current region.
 
