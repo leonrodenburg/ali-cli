@@ -19,7 +19,8 @@ def ros():
 @click.option("--template-path", help="Path to JSON template", required=True)
 @click.option(
     "--parameters",
-    default="",
+    default=[],
+    multiple=True,
     help="Comma-separated list of key=val parameters to set in the template",
 )
 @click.option(
@@ -34,8 +35,7 @@ def create_stack(obj, name, template_path, parameters, timeout_mins):
         template = f.read()
 
     template_params = {}
-    raw_params = parameters.split(",")
-    for raw_param in raw_params:
+    for raw_param in parameters:
         if len(raw_param) > 0 and "=" in raw_param:
             key, val = raw_param.split("=")
             template_params[key] = val
