@@ -1,0 +1,12 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Description: Simple OSS bucket
+Parameters:
+  BucketName:
+    Type: String
+    Description: Name of the bucket to provision (globally unique)
+Resources:
+  Bucket:
+    Type: ALIYUN::OSS::Bucket
+    Properties:
+      BucketName:
+        Ref: 'BucketName'
