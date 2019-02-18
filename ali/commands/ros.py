@@ -1,13 +1,14 @@
-import click
 import json
-from ruamel.yaml import YAML
 
+import click
+from aliyunsdkros.request.v20150901 import (
+    CreateStacksRequest,
+    DeleteStackRequest,
+    DescribeStackDetailRequest,
+    DescribeStacksRequest,
+)
 
-from aliyunsdkros.request.v20150901 import CreateStacksRequest
-from aliyunsdkros.request.v20150901 import DeleteStackRequest
-from aliyunsdkros.request.v20150901 import DescribeStacksRequest
-from aliyunsdkros.request.v20150901 import DescribeStackDetailRequest
-
+from ali.helpers.template import template_to_string, load_template
 from ali.helpers.output import output_json, output_success
 
 
@@ -38,7 +39,7 @@ def ros():
 @click.pass_obj
 def create_stack(obj, name, template, parameters, timeout_mins):
     """Creates an ROS stack"""
-    body = YAML(typ="safe", pure=True).load(template)
+    body = load_template(template)
 
     template_params = {}
     for raw_param in parameters:
@@ -53,8 +54,8 @@ def create_stack(obj, name, template, parameters, timeout_mins):
         "Template": body,
         "Parameters": template_params,
     }
-    request.set_content_type("application/json")
-    request.set_content(json.dumps(request_body).encode())
+    request.set_content_type("application/json; encoding=utf-8")
+    request.set_content(template_to_string(request_body).encode("utf-8"))
 
     client = obj["client"]
     response = client.do_action_with_exception(request)
