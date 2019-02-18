@@ -8,7 +8,7 @@ from aliyunsdkros.request.v20150901 import (
     DescribeStacksRequest,
 )
 
-from ali.commands.template import template_to_string, load_template
+from ali.helpers.template import template_to_string, load_template
 from ali.helpers.output import output_json, output_success
 
 
