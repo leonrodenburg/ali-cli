@@ -1,4 +1,6 @@
+import re
 import json
+from typing import NamedTuple
 
 import click
 from aliyunsdkros.request.v20150901 import (
@@ -6,10 +8,33 @@ from aliyunsdkros.request.v20150901 import (
     DeleteStackRequest,
     DescribeStackDetailRequest,
     DescribeStacksRequest,
+    UpdateStackRequest,
 )
 
 from ali.helpers.template import template_to_string, load_template
 from ali.helpers.output import output_json, output_success
+
+
+@click.group()
+def ros():
+    pass
+
+
+class RosParameter(NamedTuple):
+    name: str
+    value: object
+
+
+class RosParameterType(click.ParamType):
+    name = "parameter"
+
+    def convert(self, value, param, ctx):
+        found = re.match(r"(?P<name>[^=][^=]*)=(?P<value>.*)", value)
+
+        if not found:
+            self.fail(f"{value} should match <name>=<value>", param, ctx)
+
+        return RosParameter(found.group("name"), found.group("value"))
 
 
 @click.group()
@@ -26,8 +51,9 @@ def ros():
     type=click.File("r"),
 )
 @click.option(
-    "--parameters",
+    "--parameter",
     default=[],
+    type=RosParameterType(),
     multiple=True,
     help="Comma-separated list of key=val parameters to set in the template",
 )
@@ -37,22 +63,66 @@ def ros():
     help="Timeout if stack was not created within specified minutes",
 )
 @click.pass_obj
-def create_stack(obj, name, template, parameters, timeout_mins):
-    """Creates an ROS stack"""
+def create_stack(obj, name, template, parameter, timeout_mins):
+    """Creates a ROS stack"""
     body = load_template(template)
-
-    template_params = {}
-    for raw_param in parameters:
-        if len(raw_param) > 0 and "=" in raw_param:
-            key, val = raw_param.split("=")
-            template_params[key] = val
-
     request = CreateStacksRequest.CreateStacksRequest()
     request_body = {
         "Name": name,
         "TimeoutMins": timeout_mins,
         "Template": body,
-        "Parameters": template_params,
+        "Parameters": {p.name: p.value for p in parameter},
+    }
+    request.set_content_type("application/json; encoding=utf-8")
+    request.set_content(template_to_string(request_body).encode("utf-8"))
+
+    client = obj["client"]
+    response = client.do_action_with_exception(request)
+
+    output_success("Stack '%s' created successfully" % name)
+    output_json(response)
+
+
+@ros.command()
+@click.option("--name", help="Stack name", required=True)
+@click.option(
+    "--template",
+    help="JSON template (path or - to supply through stdin)",
+    required=True,
+    type=click.File("r"),
+)
+@click.option(
+    "--parameter",
+    default=[],
+    type=RosParameterType(),
+    multiple=True,
+    help="Comma-separated list of key=val parameters to set in the template",
+)
+@click.option(
+    "--timeout-mins",
+    default=10,
+    help="Timeout if stack was not created within specified minutes",
+)
+@click.option(
+    "--disabled-rollback/--no-disabled-rollback",
+    default=True,
+    is_flag=True,
+    help="on failure",
+)
+@click.pass_obj
+def update_stack(obj, name, template, parameter, timeout_mins, disabled_rollback):
+    """Updates a ROS stack"""
+    stack = _find_stack_by_name(obj["client"], name)
+    body = load_template(template)
+    request = UpdateStackRequest.UpdateStackRequest()
+    request.set_StackId(stack["Id"])
+    request.set_StackName(name)
+    request_body = {
+        "Name": name,
+        "TimeoutMins": timeout_mins,
+        "Template": body,
+        "Parameters": {p.name: p.value for p in parameter},
+        "DisabledRollback": disabled_rollback,
     }
     request.set_content_type("application/json; encoding=utf-8")
     request.set_content(template_to_string(request_body).encode("utf-8"))
