@@ -44,4 +44,5 @@ jobs:
       - run:
           name: run tests
           command: |
-            pipenv run pytest
+            pipenv shell
+            python -m pytest
