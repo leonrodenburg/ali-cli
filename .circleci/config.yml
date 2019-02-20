@@ -30,7 +30,7 @@ jobs:
           name: install dependencies
           command: |
             export PIPENV_VENV_IN_PROJECT=1
-            pip3 install pipenv
+            pip3 install --user pipenv
             pipenv install -e .
 
       - save_cache:
