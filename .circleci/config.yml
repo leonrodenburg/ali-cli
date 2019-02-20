@@ -24,9 +24,9 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+            - v2-dependencies-{{ checksum "Pipfile.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v2-dependencies-
 
       - run:
           name: install dependencies
@@ -35,7 +35,7 @@ jobs:
             pipenv install -e .
 
       - save_cache:
-          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
+          key: v2-dependencies-{{ checksum "Pipfile.lock" }}
           paths:
             - ".venv"
 
