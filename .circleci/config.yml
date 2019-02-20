@@ -31,6 +31,7 @@ jobs:
           command: |
             export PIPENV_VENV_IN_PROJECT=1
             pip3 install --user pipenv
+            export PATH=~/.local/bin:$PATH
             pipenv install -e .
 
       - save_cache:
