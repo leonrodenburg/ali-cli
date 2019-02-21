@@ -43,4 +43,4 @@ jobs:
           name: run tests
           command: |
             pipenv run pytest --cov=./
-            codecov
+            pipenv run codecov
