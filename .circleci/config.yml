@@ -31,8 +31,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            sudo pip install pipenv
-            pipenv install -e .
+            pipenv install --dev
 
       - save_cache:
           key: v2-dependencies-{{ checksum "Pipfile.lock" }}
@@ -42,5 +41,4 @@ jobs:
       - run:
           name: run tests
           command: |
-            pipenv shell
-            python -m pytest
+            pipenv run pytest
