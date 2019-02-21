@@ -12,6 +12,7 @@ bumpversion = "*"
 twine = "*"
 pytest-cov = "*"
 codecov = "*"
+pytest-mock = "*"
 
 [packages]
 ali-cli = {editable = true,path = "."}
