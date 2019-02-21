@@ -6,6 +6,7 @@ import click
 from aliyunsdkros.request.v20150901 import (
     CreateStacksRequest,
     DeleteStackRequest,
+    DescribeResourcesRequest,
     DescribeStackDetailRequest,
     DescribeStacksRequest,
     UpdateStackRequest,
@@ -13,11 +14,6 @@ from aliyunsdkros.request.v20150901 import (
 
 from ali.helpers.template import template_to_string, load_template
 from ali.helpers.output import output_json, output_success
-
-
-@click.group()
-def ros():
-    pass
 
 
 class RosParameter(NamedTuple):
@@ -167,12 +163,29 @@ def describe_stacks(obj):
 @click.option("--name", help="Stack name", required=True)
 @click.pass_obj
 def describe_stack(obj, name):
-    """Get all details of a single stack, including parameters"""
+    """Get details of a single stack"""
     stack = _find_stack_by_name(obj["client"], name)
 
     request = DescribeStackDetailRequest.DescribeStackDetailRequest()
     request.add_path_param("StackName", name)
     request.add_path_param("StackId", stack["Id"])
+
+    client = obj["client"]
+    response = client.do_action_with_exception(request)
+
+    output_json(response)
+
+
+@ros.command()
+@click.option("--name", help="Stack name", required=True)
+@click.pass_obj
+def describe_resources(obj, name):
+    """List the resources in a given stack"""
+    stack = _find_stack_by_name(obj["client"], name)
+
+    request = DescribeResourcesRequest.DescribeResourcesRequest()
+    request.set_StackId(stack["Id"])
+    request.set_StackName(name)
 
     client = obj["client"]
     response = client.do_action_with_exception(request)
@@ -186,6 +199,6 @@ def _find_stack_by_name(client, name):
     stacks_response = json.loads(client.do_action_with_exception(stacks_request))
     stacks = list(filter(lambda s: s["Name"] == name, stacks_response["Stacks"]))
     if len(stacks) == 0:
-        raise Exception("Could not find the specified stack")
+        raise Exception("Could not find the '%s' stack" % name)
 
     return stacks[0]
