@@ -11,6 +11,7 @@ jobs:
       - image: circleci/python:3.7
         environment:
           PIPENV_VENV_IN_PROJECT: true
+          CODECOV_TOKEN: "5c517ef0-1dfc-4cb1-99fd-7cc182725126"
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -41,4 +42,5 @@ jobs:
       - run:
           name: run tests
           command: |
-            pipenv run pytest
+            pipenv run pytest --cov=./
+            codecov

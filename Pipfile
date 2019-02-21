@@ -10,6 +10,8 @@ pytest = "*"
 rope = "*"
 bumpversion = "*"
 twine = "*"
+pytest-cov = "*"
+codecov = "*"
 
 [packages]
 ali-cli = {editable = true,path = "."}
