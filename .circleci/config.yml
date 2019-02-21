@@ -42,5 +42,5 @@ jobs:
       - run:
           name: run tests
           command: |
-            pipenv run pytest --cov=./
+            pipenv run pytest --cov=./ali
             pipenv run codecov
