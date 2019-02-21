@@ -1,6 +1,7 @@
 # Ali CLI
 
 [![PyPI version](https://img.shields.io/pypi/v/ali-cli.svg?colorB=brightgreen)](https://pypi.org/project/ali-cli/)
+[![Build status](https://img.shields.io/circleci/project/github/leonrodenburg/ali-cli/master.svg)](https://img.shields.io/circleci/project/github/leonrodenburg/ali-cli/master.svg)
 
 Wraps the Alibaba Cloud SDK to make complicated tasks a lot simpler.
 
