@@ -1,6 +1,7 @@
 import pytest
 import io
 import json
+import tempfile
 
 from ali.helpers import auth
 
@@ -42,3 +43,15 @@ def test_extract_credentials():
     with pytest.raises(Exception):
         invalid_profile_obj = {}
         auth.extract_credentials(invalid_profile_obj)
+
+
+def test_get_config_file_contents(tmpdir, mocker):
+    config_file = tmpdir.mkdir(".aliyun").join("config.json")
+    config_file.write("Stuff that works!")
+
+    mocked_home = mocker.patch("pathlib.Path.home")
+    mocked_home.return_value = tmpdir
+
+    result = auth._get_config_file_contents()
+
+    assert result == "Stuff that works!"
