@@ -53,9 +53,20 @@ to install the official CLI, you can manually create the file `~/.aliyun/config.
 Replace `<ACCESS_KEY_ID>` with your access key ID and `<ACCESS_KEY_SECRET>` with your access key secret. Optionally, you can change the region
 to the region you like (`eu-central-1` is Frankfurt).
 
-## Usage
+## Supported services
 
-Currently, Ali CLI only supports commands related to the Resource Orchestration Service (ROS). This allows you to deploy JSON templates as stacks,
+- Key Management Service (KMS) - [documentation](https://www.alibabacloud.com/help/product/28933.htm?spm=a2c63.m28257.a1.91.3c9d5922IB2dod)
+- Resource Orchestration Service (ROS) - [documentation](https://www.alibabacloud.com/help/product/28850.htm?spm=a2796.128466.1198106.1.73aa2f6aqdY9Nh)
+
+### Key Management Service (KMS)
+
+Supports listing of Customer Master Keys (CMK), encryption and decryption with and without data key.
+
+To see a list of supported commands, use `ali kms`.
+
+### Resource Orchestration Service (ROS)
+
+Ali CLI supports most of the ROS functions. This allows you to deploy JSON templates as stacks,
 so you can use code to define your whole infrastructure.
 
 To deploy an example bucket, run the following command:
