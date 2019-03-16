@@ -5,12 +5,13 @@ from aliyunsdkcore.client import AcsClient
 
 from ali.commands.configure import configure
 from ali.commands.ros import ros
+from ali.commands.kms import kms
 
 from ali.helpers import auth
 from ali.helpers.output import output_error
 
 
-@click.group()
+@click.group(context_settings=dict(max_content_width=120))
 @click.option("-p", "--profile", default="", help="CLI profile to load config for")
 @click.pass_context
 def cli(ctx, profile):
@@ -28,6 +29,7 @@ def cli(ctx, profile):
 
 cli.add_command(configure)
 cli.add_command(ros)
+cli.add_command(kms)
 
 
 def _handle_exception(e):

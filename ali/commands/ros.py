@@ -1,8 +1,8 @@
 import re
 import json
-from typing import NamedTuple
 
 import click
+from typing import NamedTuple
 from aliyunsdkros.request.v20150901 import (
     CreateStacksRequest,
     DeleteStackRequest,
@@ -35,6 +35,7 @@ class RosParameterType(click.ParamType):
 
 @click.group()
 def ros():
+    """Resource Orchestration Service (ROS)"""
     pass
 
 
