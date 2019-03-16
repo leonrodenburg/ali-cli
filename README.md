@@ -55,16 +55,16 @@ to the region you like (`eu-central-1` is Frankfurt).
 
 ## Supported services
 
-- Key Management Service (KMS) - [documentation](https://www.alibabacloud.com/help/product/28933.htm?spm=a2c63.m28257.a1.91.3c9d5922IB2dod)
-- Resource Orchestration Service (ROS) - [documentation](https://www.alibabacloud.com/help/product/28850.htm?spm=a2796.128466.1198106.1.73aa2f6aqdY9Nh)
+- [Key Management Service (KMS)](#kms) - [documentation](https://www.alibabacloud.com/help/product/28933.htm?spm=a2c63.m28257.a1.91.3c9d5922IB2dod)
+- [Resource Orchestration Service (ROS)](#ros) - [documentation](https://www.alibabacloud.com/help/product/28850.htm?spm=a2796.128466.1198106.1.73aa2f6aqdY9Nh)
 
-### Key Management Service (KMS)
+### <a name="kms"></a> Key Management Service (KMS)
 
 Supports listing of Customer Master Keys (CMK), encryption and decryption with and without data key.
 
 To see a list of supported commands, use `ali kms`.
 
-### Resource Orchestration Service (ROS)
+### <a name="ros"></a> Resource Orchestration Service (ROS)
 
 Ali CLI supports most of the ROS functions. This allows you to deploy JSON templates as stacks,
 so you can use code to define your whole infrastructure.
