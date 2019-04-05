@@ -29,8 +29,8 @@ to install the official CLI, you can manually create the file `~/.aliyun/config.
     {
       "name": "",
       "mode": "AK",
-      "access_key_id": "<ACCESS_KEY_ID>",
-      "access_key_secret": "<ACCESS_KEY_SECRET>",
+      "access_key_id": "ACCESS_KEY_ID",
+      "access_key_secret": "ACCESS_KEY_SECRET",
       "sts_token": "",
       "ram_role_name": "",
       "ram_role_arn": "",
@@ -50,12 +50,12 @@ to install the official CLI, you can manually create the file `~/.aliyun/config.
 }
 ```
 
-Replace `<ACCESS_KEY_ID>` with your access key ID and `<ACCESS_KEY_SECRET>` with your access key secret. Optionally, you can change the region
-to the region you like (`eu-central-1` is Frankfurt).
+Replace `ACCESS_KEY_ID` with your access key ID and `ACCESS_KEY_SECRET` with your access key secret. Optionally, you can change the region to the region you like (`eu-central-1` is Frankfurt).
 
 ## Supported services
 
 - [Key Management Service (KMS)](#kms) - [documentation](https://www.alibabacloud.com/help/product/28933.htm?spm=a2c63.m28257.a1.91.3c9d5922IB2dod)
+- [Message Service](#mns) - [documentation](https://www.alibabacloud.com/help/product/27412.htm?spm=a3c0i.7961101.1204782.1.2acc580293hZ9R)
 - [Resource Orchestration Service (ROS)](#ros) - [documentation](https://www.alibabacloud.com/help/product/28850.htm?spm=a2796.128466.1198106.1.73aa2f6aqdY9Nh)
 
 ### <a name="kms"></a> Key Management Service (KMS)
@@ -63,6 +63,24 @@ to the region you like (`eu-central-1` is Frankfurt).
 Supports listing of Customer Master Keys (CMK), encryption and decryption with and without data key.
 
 To see a list of supported commands, use `ali kms`.
+
+### <a name="mns"></a> Message Service (MNS)
+
+As the official Alibaba Cloud CLI has no support for Message Service, we decided that it would be nice to have support for it in Ali CLI. We currently support the following operations on queues and messages:
+
+- Creating a queue (`ali mns queue create --name NAME`)
+- Listing queues (`ali mns queue list`)
+- Getting queue attributes (`ali mns queue get --name NAME`)
+- Deleting a queue (`ali mns queue delete --name NAME`)
+
+- Sending a message (`echo '{"success": true}' | ali mns queue send-message --name NAME --message-body -`)
+- Receiving a single message (`ali mns queue receive-message --name NAME`)
+- Receiving a batch of messages (`ali mns queue receive-messages --name NAME --num-of-messages 10`)
+- Peeking at a message (`ali mns queue peek-message --name NAME`)
+- Peeking at a batch of messages (`ali mns queue peek-messages --name NAME --num-of-messages 10`)
+- Deleting a message from a queue (`ali mns queue delete-message --name NAME --handle RECEIPT_HANDLE`)
+
+Topics and subscriptions will be supported at a later point in time.
 
 ### <a name="ros"></a> Resource Orchestration Service (ROS)
 

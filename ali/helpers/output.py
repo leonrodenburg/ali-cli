@@ -18,7 +18,7 @@ def output_json(json):
 
 
 def output_error(message):
-    click.secho("Error: %s" % message)
+    click.secho("Error: %s" % message, fg="red", bold=True)
 
 
 def _format_response(response):

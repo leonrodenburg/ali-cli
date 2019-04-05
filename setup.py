@@ -23,6 +23,9 @@ setuptools.setup(
         "aliyun-python-sdk-core>=2.13",
         "aliyun-python-sdk-ros>=2.2.8",
         "aliyun-python-sdk-kms>=2.5.0",
+        "aliyun-python-sdk-sts>=3.0.1",
         "ruamel.yaml>=0.15.88",
+        "xmltodict>=0.12.0",
+        "requests>=2.21.0",
     ],
 )
