@@ -55,7 +55,7 @@ Replace `ACCESS_KEY_ID` with your access key ID and `ACCESS_KEY_SECRET` with you
 ## Supported services
 
 - [Key Management Service (KMS)](#kms) - [documentation](https://www.alibabacloud.com/help/product/28933.htm?spm=a2c63.m28257.a1.91.3c9d5922IB2dod)
-- [Message Service](#mns) - [documentation](https://www.alibabacloud.com/help/product/27412.htm?spm=a3c0i.7961101.1204782.1.2acc580293hZ9R)
+- [Message Service (MNS)](#mns) - [documentation](https://www.alibabacloud.com/help/product/27412.htm?spm=a3c0i.7961101.1204782.1.2acc580293hZ9R)
 - [Resource Orchestration Service (ROS)](#ros) - [documentation](https://www.alibabacloud.com/help/product/28850.htm?spm=a2796.128466.1198106.1.73aa2f6aqdY9Nh)
 
 ### <a name="kms"></a> Key Management Service (KMS)
