@@ -27,5 +27,6 @@ setuptools.setup(
         "ruamel.yaml>=0.15.88",
         "xmltodict>=0.12.0",
         "requests>=2.21.0",
+        "urllib3>=1.24.2"
     ],
 )
