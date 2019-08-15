@@ -26,9 +26,6 @@ def generate_key(keyfile):
         f.write(key)
 
     output_success("Successfully created secret key in %s" % keyfile)
-    output_json(json.dumps({
-        "SecretKey": key.decode("utf-8")
-    }))
 
 
 @crypto.command()
