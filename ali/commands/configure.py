@@ -1,6 +1,4 @@
 import click
-import json
-from pathlib import Path
 
 
 @click.command()

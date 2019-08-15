@@ -1,9 +1,10 @@
-import click
 import json
-import xmltodict
 
+import click
+import xmltodict
 from aliyunsdksts.request.v20150401 import GetCallerIdentityRequest
 
+from ali.commands.mns.client import MnsClient
 from ali.commands.mns.requests.queue import (
     BatchPeekMessageRequest,
     BatchReceiveMessageRequest,
@@ -16,8 +17,6 @@ from ali.commands.mns.requests.queue import (
     ReceiveMessageRequest,
     SendMessageRequest,
 )
-from ali.commands.mns.client import MnsClient
-
 from ali.helpers.output import output_json, output_success, output_error
 
 

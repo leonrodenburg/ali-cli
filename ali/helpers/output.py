@@ -1,5 +1,6 @@
-import click
 import json
+
+import click
 from pygments import highlight, lexers, formatters
 
 

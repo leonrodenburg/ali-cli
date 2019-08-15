@@ -1,10 +1,9 @@
-import json
 import os
 
 import click
 from cryptography.fernet import Fernet
 
-from ali.helpers.output import output_success, output_json
+from ali.helpers.output import output_success
 
 
 @click.group()
@@ -14,7 +13,13 @@ def crypto():
 
 
 @crypto.command()
-@click.option("-k", "--keyfile", help="Filename to store secret key in", required=True, type=click.Path())
+@click.option(
+    "-k",
+    "--keyfile",
+    help="Filename to store secret key in",
+    required=True,
+    type=click.Path(),
+)
 def generate_key(keyfile):
     """Generate a secret key for symmetric cryptography"""
     if os.path.exists(keyfile):
@@ -29,11 +34,28 @@ def generate_key(keyfile):
 
 
 @crypto.command()
-@click.option("-k", "--keyfile", help="Filename of the secret key used to encrypt", required=True,
-              type=click.Path(exists=True))
+@click.option(
+    "-k",
+    "--keyfile",
+    help="Filename of the secret key used to encrypt",
+    required=True,
+    type=click.Path(exists=True),
+)
 @click.option("-s", "--string", help="Plaintext string to encrypt", required=False)
-@click.option("-f", "--file", help="Plaintext file to encrypt", required=False, type=click.Path(exists=True))
-@click.option("-o", "--output", help="Output result to this file", required=False, type=click.Path())
+@click.option(
+    "-f",
+    "--file",
+    help="Plaintext file to encrypt",
+    required=False,
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-o",
+    "--output",
+    help="Output result to this file",
+    required=False,
+    type=click.Path(),
+)
 def encrypt(keyfile, string="", file=None, output=None):
     """Encrypt data using a secret key file"""
     if not string and not file:
@@ -58,11 +80,28 @@ def encrypt(keyfile, string="", file=None, output=None):
 
 
 @crypto.command()
-@click.option("-k", "--keyfile", help="Filename of the secret key used to encrypt", required=True,
-              type=click.Path(exists=True))
+@click.option(
+    "-k",
+    "--keyfile",
+    help="Filename of the secret key used to encrypt",
+    required=True,
+    type=click.Path(exists=True),
+)
 @click.option("-s", "--string", help="Ciphertext string to decrypt", required=False)
-@click.option("-f", "--file", help="Ciphertext file to decrypt", required=False, type=click.Path(exists=True))
-@click.option("-o", "--output", help="Output result to this file", required=False, type=click.Path())
+@click.option(
+    "-f",
+    "--file",
+    help="Ciphertext file to decrypt",
+    required=False,
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-o",
+    "--output",
+    help="Output result to this file",
+    required=False,
+    type=click.Path(),
+)
 def decrypt(keyfile, string="", file=None, output=None):
     """Decrypt data using a secret key file"""
     if not string and not file:

@@ -1,6 +1,6 @@
 import sys
-import click
 
+import click
 from aliyunsdkcore.client import AcsClient
 
 from ali.commands.configure import configure
@@ -8,7 +8,6 @@ from ali.commands.crypto import crypto
 from ali.commands.kms import kms
 from ali.commands.mns import mns
 from ali.commands.ros import ros
-
 from ali.helpers import auth
 from ali.helpers.output import output_error
 

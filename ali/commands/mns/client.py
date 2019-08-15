@@ -1,9 +1,7 @@
-import json
-import base64
-import hmac
 import hashlib
+import hmac
+
 import requests
-import logging
 
 from ali.commands.mns.requests.base_request import BaseRequest
 from ali.commands.mns.util import str_to_md5, strip_protocol, bytes_to_b64
