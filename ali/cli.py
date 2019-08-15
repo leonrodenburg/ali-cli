@@ -4,9 +4,10 @@ import click
 from aliyunsdkcore.client import AcsClient
 
 from ali.commands.configure import configure
-from ali.commands.ros import ros
+from ali.commands.crypto import crypto
 from ali.commands.kms import kms
 from ali.commands.mns import mns
+from ali.commands.ros import ros
 
 from ali.helpers import auth
 from ali.helpers.output import output_error
@@ -29,9 +30,10 @@ def cli(ctx, profile):
 
 
 cli.add_command(configure)
-cli.add_command(ros)
+cli.add_command(crypto)
 cli.add_command(kms)
 cli.add_command(mns)
+cli.add_command(ros)
 
 
 def _handle_exception(e):

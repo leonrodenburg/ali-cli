@@ -1,5 +1,4 @@
 import click
-
 from aliyunsdkkms.request.v20160120 import (
     EncryptRequest,
     DecryptRequest,
@@ -47,6 +46,19 @@ def encrypt(obj, key_id, value):
 
 
 @kms.command()
+@click.option("--blob", help="Ciphertext blob to decrypt", required=True)
+@click.pass_obj
+def decrypt(obj, blob):
+    """Decrypt a ciphtertext blob using a Customer Master Key (CMK)"""
+    request = DecryptRequest.DecryptRequest()
+    request.set_CiphertextBlob(blob)
+
+    client = obj["client"]
+    response = client.do_action_with_exception(request)
+    output_json(response)
+
+
+@kms.command()
 @click.option("--key-id", help="Customer Master Key (CMK) ID to use", required=True)
 @click.option(
     "--key-spec",
@@ -60,19 +72,6 @@ def generate_data_key(obj, key_id, key_spec):
     request = GenerateDataKeyRequest.GenerateDataKeyRequest()
     request.set_KeyId(key_id)
     request.set_KeySpec(key_spec)
-
-    client = obj["client"]
-    response = client.do_action_with_exception(request)
-    output_json(response)
-
-
-@kms.command()
-@click.option("--blob", help="Ciphertext blob to decrypt", required=True)
-@click.pass_obj
-def decrypt(obj, blob):
-    """Decrypt a ciphtertext blob using a Customer Master Key (CMK)"""
-    request = DecryptRequest.DecryptRequest()
-    request.set_CiphertextBlob(blob)
 
     client = obj["client"]
     response = client.do_action_with_exception(request)
