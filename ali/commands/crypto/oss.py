@@ -91,8 +91,8 @@ def upload(obj, url1, url2, keyfile, recursive):
             "Can not upload multiple local files to a single remote file, please specify a remote directory that ends with /"
         )
 
-    with open(keyfile, "rb") as f:
-        key = f.read()
+    key = _read_keyfile(keyfile)
+    f = Fernet(key)
 
     for file in local_files:
         remote_path = (
@@ -100,9 +100,12 @@ def upload(obj, url1, url2, keyfile, recursive):
         ).lstrip("/")
 
         bucket = _get_oss_bucket(bucket_name, obj["client"])
-        encrypted = _encrypt_file(file, key)
 
-        bucket.put_object(remote_path, encrypted)
+        with open(file, "rb") as local_file:
+            decrypted = local_file.read()
+            encrypted = f.encrypt(decrypted)
+
+            bucket.put_object(remote_path, encrypted)
 
         click.secho(
             "Upload: %s -> %s (%s)"
@@ -159,9 +162,7 @@ def download(obj, url1, url2, keyfile, recursive):
             "Can not download multiple remote files to a single local file, please specify a local directory that ends with /"
         )
 
-    with open(keyfile, "rb") as f:
-        key = f.read()
-
+    key = _read_keyfile(keyfile)
     f = Fernet(key)
 
     for file in remote_files:
@@ -200,8 +201,6 @@ def _get_oss_bucket(bucket_name, client):
     )
 
 
-def _encrypt_file(path, key):
-    with open(path, "rb") as f:
-        unencrypted = f.read()
-        f = Fernet(key)
-        return f.encrypt(unencrypted)
+def _read_keyfile(keyfile):
+    with open(keyfile, "rb") as f:
+        return f.read()
