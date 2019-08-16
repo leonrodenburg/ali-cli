@@ -15,7 +15,7 @@ codecov = "==2.0.15"
 pytest-mock = "==1.10.4"
 
 [packages]
-ali-cli = {editable = true,path = "."}
+ali-cli = {path = ".",editable = true}
 
 [requires]
 python_version = "3.7"

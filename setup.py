@@ -18,18 +18,18 @@ setuptools.setup(
     entry_points={"console_scripts": ["ali = ali.cli:safe_cli"]},
     install_requires=[
         "click==7.0",
-        "colorama==0.5.0",
+        "colorama==0.4.1",
         "pygments==2.4.2",
-        "aliyun-python-sdk-core>=2.13",
-        "aliyun-python-sdk-ros>=2.2.8",
-        "aliyun-python-sdk-kms>=2.5.0",
-        "aliyun-python-sdk-sts>=3.0.1",
-        "oss2>=2.8.0",
         "ruamel.yaml==0.16.2",
         "xmltodict==0.12.0",
         "requests==2.22.0",
         "urllib3==1.25.3",
         "cryptography==2.7",
-        "humanize==0.5.1"
+        "humanize==0.5.1",
+        "aliyun-python-sdk-core>=2.13",
+        "aliyun-python-sdk-ros>=2.2.8",
+        "aliyun-python-sdk-kms>=2.5.0",
+        "aliyun-python-sdk-sts>=3.0.1",
+        "oss2>=2.8.0"
     ],
 )
