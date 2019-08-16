@@ -4,12 +4,16 @@ import click
 from cryptography.fernet import Fernet
 
 from ali.helpers.output import output_success
+from ali.commands.crypto.oss import oss
 
 
 @click.group()
 def crypto():
     """Cryptography functions"""
     pass
+
+
+crypto.add_command(oss)
 
 
 @crypto.command()
