@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ali-cli",
-    version="0.4.1",
+    version="0.5.0",
     author="Léon Rodenburg",
     author_email="lrodenburg@xebia.com",
     keywords="alibaba cloud aliyun cli",
@@ -18,7 +18,7 @@ setuptools.setup(
     entry_points={"console_scripts": ["ali = ali.cli:safe_cli"]},
     install_requires=[
         "click==7.0",
-        "colorama==0.4.1",
+        "colorama==0.5.0",
         "pygments==2.4.2",
         "aliyun-python-sdk-core>=2.13",
         "aliyun-python-sdk-ros>=2.2.8",
