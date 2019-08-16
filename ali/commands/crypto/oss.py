@@ -86,9 +86,9 @@ def upload(obj, url1, url2, keyfile, recursive):
     if len(bucket_path) < 1:
         bucket_path = "/"
 
-    if len(local_files) > 1 and not bucket_path.endswith("/"):
+    if os.path.isdir(url1) and not bucket_path.endswith("/"):
         raise Exception(
-            "Can not upload multiple files to a file target, please specify a remote directory with /"
+            "Can not upload multiple local files to a single remote file, please specify a remote directory that ends with /"
         )
 
     with open(keyfile, "rb") as f:
@@ -156,7 +156,7 @@ def download(obj, url1, url2, keyfile, recursive):
 
     if (bucket_path == "" or bucket_path.endswith("/")) and not url2.endswith("/"):
         raise Exception(
-            "Can not download multiple files to a local file, please specify a local directory"
+            "Can not download multiple remote files to a single local file, please specify a local directory that ends with /"
         )
 
     with open(keyfile, "rb") as f:
