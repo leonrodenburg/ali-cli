@@ -60,7 +60,7 @@ Replace `ACCESS_KEY_ID` with your access key ID and `ACCESS_KEY_SECRET` with you
 
 ## Other features
 
-- [Client-side cryptography with OSS](#crypto) - [OSS documentation](https://www.alibabacloud.com/help/product/31815.htm?spm=a3c0i.7950270.1167928.3.5761ab91pLZinG)
+- [Client-side cryptography with Object Storage Service (OSS)](#crypto) - [documentation](https://www.alibabacloud.com/help/product/31815.htm?spm=a3c0i.7950270.1167928.3.5761ab91pLZinG)
 
 ### <a name="kms"></a> Key Management Service (KMS)
 
