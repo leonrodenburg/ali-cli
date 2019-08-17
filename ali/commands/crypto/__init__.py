@@ -1,10 +1,10 @@
 import os
-
 import click
+
 from cryptography.fernet import Fernet
 
 from ali.helpers.output import output_success
-from ali.commands.crypto.oss import oss
+from ali.commands.crypto.oss import group
 
 
 @click.group()
@@ -13,7 +13,7 @@ def crypto():
     pass
 
 
-crypto.add_command(oss)
+crypto.add_command(group, name="oss")
 
 
 @crypto.command()

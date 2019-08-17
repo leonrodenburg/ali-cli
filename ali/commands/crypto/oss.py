@@ -2,16 +2,17 @@ import os
 import click
 import oss2
 import humanize
+
 from cryptography.fernet import Fernet
 
 
 @click.group()
-def oss():
+def group():
     """Commands for working with OSS with client-side encryption enabled"""
     pass
 
 
-@oss.command()
+@group.command()
 @click.argument("url1")
 @click.argument("url2")
 @click.option(
@@ -38,7 +39,7 @@ def cp(ctx, obj, url1, url2, keyfile, recursive):
         ctx.forward(upload)
 
 
-@oss.command()
+@group.command()
 @click.argument("url1", type=click.Path(exists=True))
 @click.argument("url2")
 @click.option(
@@ -66,7 +67,6 @@ def upload(obj, url1, url2, keyfile, recursive):
     local_files = []
     if os.path.isdir(url1) and recursive:
         for dirname, _, files in os.walk(url1):
-            print(dirname)
             for file in files:
                 if dirname.startswith("."):
                     dirname = dirname[1:]
@@ -79,7 +79,7 @@ def upload(obj, url1, url2, keyfile, recursive):
                     os.path.join(url1.lstrip("."), entry.name).lstrip("/")
                 )
     else:
-        local_files = [os.path.basename(url1)]
+        local_files = [url1]
 
     bucket_name = url2.replace("oss://", "").split("/")[0]
     bucket_path = "/".join(url2.replace("oss://", "").split("/")[1:])
@@ -96,7 +96,9 @@ def upload(obj, url1, url2, keyfile, recursive):
 
     for file in local_files:
         remote_path = (
-            "%s%s" % (bucket_path, file) if bucket_path.endswith("/") else bucket_path
+            "%s%s" % (bucket_path, os.path.basename(file))
+            if bucket_path.endswith("/")
+            else bucket_path
         ).lstrip("/")
 
         bucket = _get_oss_bucket(bucket_name, obj["client"])
@@ -105,6 +107,7 @@ def upload(obj, url1, url2, keyfile, recursive):
             decrypted = local_file.read()
             encrypted = f.encrypt(decrypted)
 
+            print(bucket)
             bucket.put_object(remote_path, encrypted)
 
         click.secho(
@@ -117,7 +120,7 @@ def upload(obj, url1, url2, keyfile, recursive):
         )
 
 
-@oss.command()
+@group.command()
 @click.argument("url1")
 @click.argument("url2", type=click.Path())
 @click.option(
