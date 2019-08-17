@@ -13,6 +13,7 @@ twine = "==1.13.0"
 pytest-cov = "==2.7.1"
 codecov = "==2.0.15"
 pytest-mock = "==1.10.4"
+ali-cli = {path = ".",editable = true}
 
 [packages]
 ali-cli = {path = ".",editable = true}
