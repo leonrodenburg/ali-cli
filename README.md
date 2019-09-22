@@ -154,8 +154,8 @@ As an example, let's say you want to encrypt your very secure password `MyPasswo
 [leon@home ~] ali crypto generate-key -k my-key
 > Successfully created secret key in my-key
 [leon@home ~] ali crypto encrypt -k my-key -s MyPassword1234
-> gAAAAABdhyODhPOc9UdcRQ1lTXOTZC2q-bsuhcQqhfoG4JfIS1kWlpTVfZvpWdQj6sURXKGryshOW915wRZ9vMRNbIAdc3UjTg==
-[leon@home ~] ali crypto decrypt -k my-key -s gAAAAABdhyODhPOc9UdcRQ1lTXOTZC2q-bsuhcQqhfoG4JfIS1kWlpTVfZvpWdQj6sURXKGryshOW915wRZ9vMRNbIAdc3UjTg==
+> gAAAAABdhyODhPOc9UdcRQ1lTXOTZC2q-bsuhcQqhfoG4Jf... # trimmed for readability
+[leon@home ~] ali crypto decrypt -k my-key -s gAAAAABdhyODhPOc9UdcRQ1lTXOTZC2q-bsuhcQqhfoG4Jf...
 > MyPassword1234
 ```
 
