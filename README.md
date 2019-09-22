@@ -122,6 +122,8 @@ encryption, so you don't have to do it yourself. The following features are supp
 
 #### Prequisite: Generating a key
 
+To encrypt or decrypt data, we first need a key:
+
 `ali crypto generate-key -k KEYFILE`
 
 The generated secret key will be put in the `KEYFILE` path. This file is extremely important and should be kept somewhere safe. If the key file is lost,
@@ -131,7 +133,7 @@ The encryption mechanism uses a [Fernet symmetric key](https://cryptography.io/e
 written to `KEYFILE` directly. This means that anyone with access to that file is also able to decrypt your data. Be careful with handing out the keyfile
 to others. Keep a copy of the key offline in a safe (on a USB stick or write the key out on paper) and remove the key from your computer as soon as you
 are done with it. For convenience, you could decide to store a copy of the key online. I would suggest you to store the key separated from the data,
-preferrably in the online storage solution of a different cloud provider. Be sure to enable encryption on the bucket in this case.
+preferrably in the online storage solution of a different cloud provider. Be sure to enable encryption on the bucket.
 
 #### Encrypting / decrypting locally
 
@@ -149,7 +151,7 @@ File encryption only supports files, not directories.
 
 #### Automatic upload / download of encrypted files to OSS
 
-To solve the problems outlined in the introduction of the workflow, it can be very handy to employ client-side encryption when uploading sensitive
+To solve the problems outlined in the introduction of this workflow, it can be very handy to employ client-side encryption when uploading sensitive
 files to a cloud provider's storage solution. Using Ali CLI, you can conveniently upload files and directories to a bucket, automatically encrypting
 them with a keyfile on your computer. When you download them again, the files will be downloaded and decrypted locally again. Only encrypted data
 will be transferred over the wire and stored in the OSS bucket.
