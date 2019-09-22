@@ -157,7 +157,7 @@ files to a cloud provider's storage solution. Using Ali CLI, you can convenientl
 them with a keyfile on your computer. When you download them again, the files will be downloaded and decrypted locally again. Only encrypted data
 will be transferred over the wire and stored in the OSS bucket.
 
-The CLI commands are very simple:
+The CLI commands are very simple and largely mirror the commands of the official CLI:
 
 ```sh
 ali crypto oss cp LOCAL_PATH oss://BUCKET/PATH -k KEYFILE # Copy from local directory / file to bucket
