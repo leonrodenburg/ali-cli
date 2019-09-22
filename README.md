@@ -55,7 +55,7 @@ Replace `ACCESS_KEY_ID` with your access key ID and `ACCESS_KEY_SECRET` with you
 ## Supported services
 
 - [Key Management Service (KMS)](#kms) - [documentation](https://www.alibabacloud.com/help/product/28933.htm?spm=a2c63.m28257.a1.91.3c9d5922IB2dod)
-- [Message Service (MNS)](#mns) - [documentation](https://www.alibabacloud.com/help/product/27412.htm?spm=a3c0i.7961101.1204782.1.2acc580293hZ9R)
+- [Message Notification Service (MNS)](#mns) - [documentation](https://www.alibabacloud.com/help/product/27412.htm?spm=a3c0i.7961101.1204782.1.2acc580293hZ9R)
 - [Resource Orchestration Service (ROS)](#ros) - [documentation](https://www.alibabacloud.com/help/product/28850.htm?spm=a2796.128466.1198106.1.73aa2f6aqdY9Nh)
 
 ## Supported workflows
@@ -70,9 +70,9 @@ Supports listing of Customer Master Keys (CMK), encryption and decryption with a
 
 To see a list of supported commands, use `ali kms`.
 
-### <a name="mns"></a> Message Service (MNS)
+### <a name="mns"></a> Message Notification Service (MNS)
 
-As the official Alibaba Cloud CLI has no support for Message Service, we decided that it would be nice to have support for it in Ali CLI. We currently support the following operations on queues and messages:
+As the official Alibaba Cloud CLI has no support for Message Notification Service, we decided that it would be nice to have support for it in Ali CLI. We currently support the following operations on queues and messages:
 
 - Creating a queue - `ali mns queue create --name NAME`
 - Listing queues - `ali mns queue list`
