@@ -141,11 +141,22 @@ preferrably in the online storage solution of a different cloud provider. Be sur
 The keyfile can be used to encrypt / decrypt strings and files locally. Here are a few examples:
 
 ```sh
-ali crypto encrypt -k KEYFILE -s STRING # Encrypt string
-ali crypto decrypt -k KEYFILE -s STRING # Decrypt string
+ali crypto encrypt -k KEYFILE -s PLAIN_TEXT # Encrypt string
+ali crypto decrypt -k KEYFILE -s ENCRYPTED_STRING # Decrypt string
 
 ali crypto encrypt -k KEYFILE -f FILE_TO_ENCRYPT # Encrypt file at path
-ali crypto decrypt -k KEYFILE -f FILE_TO_ENCRYPT # Decrypt file at path
+ali crypto decrypt -k KEYFILE -f FILE_TO_DECRYPT # Decrypt file at path
+```
+
+As an example, let's say you want to encrypt your very secure password `MyPassword1234`. To do this, follow these steps:
+
+```sh
+[leon@home ~] ali crypto generate-key -k my-key
+> Successfully created secret key in my-key
+[leon@home ~] ali crypto encrypt -k my-key -s MyPassword1234
+> gAAAAABdhyODhPOc9UdcRQ1lTXOTZC2q-bsuhcQqhfoG4JfIS1kWlpTVfZvpWdQj6sURXKGryshOW915wRZ9vMRNbIAdc3UjTg==
+[leon@home ~] ali crypto decrypt -k my-key -s gAAAAABdhyODhPOc9UdcRQ1lTXOTZC2q-bsuhcQqhfoG4JfIS1kWlpTVfZvpWdQj6sURXKGryshOW915wRZ9vMRNbIAdc3UjTg==
+> MyPassword1234
 ```
 
 File encryption only supports files, not directories.
@@ -160,8 +171,11 @@ will be transferred over the wire and stored in the OSS bucket.
 The CLI commands are very simple and largely mirror the commands of the official CLI:
 
 ```sh
-ali crypto oss cp LOCAL_PATH oss://BUCKET/PATH -k KEYFILE # Copy from local directory / file to bucket
-ali crypto oss cp oss://BUCKET/PATH LOCAL_PATH -k KEYFILE # Copy from bucket to local file / directory
+# Copy from local directory / file to bucket
+ali crypto oss cp LOCAL_PATH oss://BUCKET/PATH -k KEYFILE
+
+# Copy from bucket to local file / directory
+ali crypto oss cp oss://BUCKET/PATH LOCAL_PATH -k KEYFILE
 ```
 
 As the files are encrypted and decrypted locally, the keyfile is very important. If you lose it, the online data also becomes useless.
