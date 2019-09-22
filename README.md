@@ -75,18 +75,18 @@ support the following operations on queues and messages.
 
 ### Queue operations
 
-Creating a queue - `ali mns queue create --name NAME`
-Listing queues - `ali mns queue list`
-Getting queue attributes - `ali mns queue get --name NAME`
-Deleting a queue - `ali mns queue delete --name NAME`
+Creating a queue - `ali mns queue create --name NAME`<br>
+Listing queues - `ali mns queue list`<br>
+Getting queue attributes - `ali mns queue get --name NAME`<br>
+Deleting a queue - `ali mns queue delete --name NAME`<br>
 
 ### Message operations
 
-Sending a message - `echo '{"success": true}' | ali mns queue send-message --name NAME --message-body -`
-Receiving a single message - `ali mns queue receive-message --name NAME`
-Receiving a batch of messages - `ali mns queue receive-messages --name NAME --num-of-messages 10`
-Peeking at a message - `ali mns queue peek-message --name NAME`
-Peeking at a batch of messages - `ali mns queue peek-messages --name NAME --num-of-messages 10`
+Sending a message - `echo '{"success": true}' | ali mns queue send-message --name NAME --message-body -`<br>
+Receiving a single message - `ali mns queue receive-message --name NAME`<br>
+Receiving a batch of messages - `ali mns queue receive-messages --name NAME --num-of-messages 10`<br>
+Peeking at a message - `ali mns queue peek-message --name NAME`<br>
+Peeking at a batch of messages - `ali mns queue peek-messages --name NAME --num-of-messages 10`<br>
 Deleting a message from a queue - `ali mns queue delete-message --name NAME --handle RECEIPT_HANDLE`
 
 Topics and subscriptions will be supported at a later point in time.
