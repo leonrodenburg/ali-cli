@@ -12,7 +12,11 @@ from ali.commands.crypto.oss import group
 mock_obj = {"client": {}}
 mock_bucket = mock.MagicMock()
 
-@mock.patch("ali.commands.crypto.oss._get_oss_bucket", new=mock.MagicMock(return_value=mock_bucket))
+
+@mock.patch(
+    "ali.commands.crypto.oss._get_oss_bucket",
+    new=mock.MagicMock(return_value=mock_bucket),
+)
 @mock.patch("ali.commands.crypto.oss.Fernet")
 def test_upload(mock_fernet):
     fernet = mock_fernet.return_value
@@ -31,7 +35,9 @@ def test_upload(mock_fernet):
 
     runner = CliRunner()
     result = runner.invoke(
-        group, ["upload", temp_url.name, "oss://test/file.txt", "-k", temp_key.name], obj=mock_obj
+        group,
+        ["upload", temp_url.name, "oss://test/file.txt", "-k", temp_key.name],
+        obj=mock_obj,
     )
 
     assert result.exception is None
