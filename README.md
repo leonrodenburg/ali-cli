@@ -161,7 +161,6 @@ The CLI commands are very simple:
 
 ```sh
 ali crypto oss cp LOCAL_PATH oss://BUCKET/PATH -k KEYFILE # Copy from local directory / file to bucket
-
 ali crypto oss cp oss://BUCKET/PATH LOCAL_PATH -k KEYFILE # Copy from bucket to local file / directory
 ```
 
