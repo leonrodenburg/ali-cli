@@ -12,11 +12,19 @@ from ali.helpers import auth
 from ali.helpers.output import output_error
 
 
-@click.group(context_settings=dict(max_content_width=160))
+@click.group(context_settings=dict(max_content_width=160), invoke_without_command=True)
 @click.option("-p", "--profile", default="", help="CLI profile to load config for")
+@click.option("--version", is_flag=True, help="Output CLI version and exit")
 @click.pass_context
-def cli(ctx, profile):
-    """Ali CLI"""
+def cli(ctx, profile, version):
+    """Ali CLI (v0.5.3)"""
+    if version:
+        click.echo("Ali CLI (v0.5.3)")
+        exit(0)
+    elif ctx.invoked_subcommand is None:
+        click.echo(ctx.command.get_help(ctx))
+        exit(0)
+
     profile_obj = auth.extract_profile(profile)
     if not profile_obj:
         raise Exception(
