@@ -70,19 +70,24 @@ To see a list of supported commands, use `ali kms`.
 
 ## <a name="mns"></a> Message Notification Service (MNS)
 
-As the official Alibaba Cloud CLI has no support for Message Notification Service, we decided that it would be nice to have support for it in Ali CLI. We currently support the following operations on queues and messages:
+As the official Alibaba Cloud CLI has no support for Message Notification Service, we decided that it would be nice to have support for it in Ali CLI. We currently
+support the following operations on queues and messages.
 
-- Creating a queue - `ali mns queue create --name NAME`
-- Listing queues - `ali mns queue list`
-- Getting queue attributes - `ali mns queue get --name NAME`
-- Deleting a queue - `ali mns queue delete --name NAME`
+### Queue operations
 
-- Sending a message - `echo '{"success": true}' | ali mns queue send-message --name NAME --message-body -`
-- Receiving a single message - `ali mns queue receive-message --name NAME`
-- Receiving a batch of messages - `ali mns queue receive-messages --name NAME --num-of-messages 10`
-- Peeking at a message - `ali mns queue peek-message --name NAME`
-- Peeking at a batch of messages - `ali mns queue peek-messages --name NAME --num-of-messages 10`
-- Deleting a message from a queue - `ali mns queue delete-message --name NAME --handle RECEIPT_HANDLE`
+Creating a queue - `ali mns queue create --name NAME`
+Listing queues - `ali mns queue list`
+Getting queue attributes - `ali mns queue get --name NAME`
+Deleting a queue - `ali mns queue delete --name NAME`
+
+### Message operations
+
+Sending a message - `echo '{"success": true}' | ali mns queue send-message --name NAME --message-body -`
+Receiving a single message - `ali mns queue receive-message --name NAME`
+Receiving a batch of messages - `ali mns queue receive-messages --name NAME --num-of-messages 10`
+Peeking at a message - `ali mns queue peek-message --name NAME`
+Peeking at a batch of messages - `ali mns queue peek-messages --name NAME --num-of-messages 10`
+Deleting a message from a queue - `ali mns queue delete-message --name NAME --handle RECEIPT_HANDLE`
 
 Topics and subscriptions will be supported at a later point in time.
 
