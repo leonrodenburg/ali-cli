@@ -17,9 +17,9 @@ from ali.helpers.output import output_error
 @click.option("--version", is_flag=True, help="Output CLI version and exit")
 @click.pass_context
 def cli(ctx, profile, version):
-    """Ali CLI (v0.5.5)"""
+    """Ali CLI (v0.5.6)"""
     if version:
-        click.echo("Ali CLI (v0.5.5)")
+        click.echo("Ali CLI (v0.5.6)")
         exit(0)
     elif ctx.invoked_subcommand is None:
         click.echo(ctx.command.get_help(ctx))
