@@ -25,11 +25,11 @@ setuptools.setup(
         "requests==2.22.0",
         "urllib3==1.25.3",
         "cryptography==2.7",
-        "humanize==0.5.2",
+        "humanize==0.5.1",
         "aliyun-python-sdk-core>=2.13",
         "aliyun-python-sdk-ros>=2.2.8",
         "aliyun-python-sdk-kms>=2.5.0",
         "aliyun-python-sdk-sts>=3.0.1",
-        "oss2>=2.8.0"
+        "oss2>=2.8.0",
     ],
 )
