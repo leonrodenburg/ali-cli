@@ -8,6 +8,7 @@ from ali.commands.crypto import crypto
 from ali.commands.kms import kms
 from ali.commands.mns import mns
 from ali.commands.ros import ros
+from ali.commands.params import params
 from ali.helpers import auth
 from ali.helpers.output import output_error
 
@@ -41,6 +42,7 @@ cli.add_command(crypto)
 cli.add_command(kms)
 cli.add_command(mns)
 cli.add_command(ros)
+cli.add_command(params)
 
 
 def _handle_exception(e):
