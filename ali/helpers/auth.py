@@ -1,34 +1,57 @@
 import json
 from pathlib import Path
 
+from aliyunsdkcore.auth.credentials import (
+    StsTokenCredential,
+    EcsRamRoleCredential,
+    RamRoleArnCredential,
+    AccessKeyCredential,
+)
+from aliyunsdkcore.client import AcsClient
+
 
 def extract_profile(profile=""):
     config = _get_config_file_contents()
     config = json.loads(config)
 
-    if "profiles" not in config:
-        raise Exception(
-            "Invalid Alibaba Cloud credentials loaded, no profiles in config file"
-        )
+    current = profile
+    if len(current) < 1 and "current" in config:
+        current = config["current"]
 
-    found = list(filter(lambda p: p["name"] == profile, config["profiles"]))
+    found = list(filter(lambda p: p["name"] == current, config["profiles"]))
     if len(found) > 0:
         return found[0]
     else:
-        return None
-
-
-def extract_credentials(profile_obj):
-    if "access_key_id" not in profile_obj or "access_key_secret" not in profile_obj:
         raise Exception(
-            "Invalid Alibaba Cloud credentials loaded, missing access key ID or access key secret"
+            "Invalid profile specified or no profiles configured at all (run 'aliyun configure')"
         )
 
-    return (
-        profile_obj["access_key_id"],
-        profile_obj["access_key_secret"],
-        profile_obj["region_id"],
-    )
+
+def get_client_for_profile(profile):
+    if profile["mode"] == "AK":
+        creds = AccessKeyCredential(
+            profile["access_key_id"], profile["access_key_secret"]
+        )
+    elif profile["mode"] == "StsToken":
+        creds = StsTokenCredential(
+            profile["access_key_id"], profile["access_key_secret"], profile["sts_token"]
+        )
+    elif profile["mode"] == "RamRoleArn":
+        creds = RamRoleArnCredential(
+            profile["access_key_id"],
+            profile["access_key_secret"],
+            profile["ram_role_arn"],
+            profile["ram_role_name"],
+        )
+    elif profile["mode"] == "EcsRamRole":
+        creds = EcsRamRoleCredential(profile["ram_role_name"])
+    else:
+        raise Exception(
+            "Tried to extract credentials from invalid profile: '%s'"
+            % (profile["name"])
+        )
+
+    return AcsClient(region_id=profile["region_id"], credential=creds)
 
 
 def _get_config_file_contents():

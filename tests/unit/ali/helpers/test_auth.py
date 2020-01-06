@@ -1,23 +1,32 @@
-import pytest
-import io
 import json
-import tempfile
+from unittest import mock
+
+import aliyunsdkcore
+import pytest
+from aliyunsdkcore.auth.credentials import AccessKeyCredential
+from aliyunsdkcore.client import AcsClient
 
 from ali.helpers import auth
 
 
 def test_extract_profile(mocker):
-    valid_config = {"profiles": [{"name": "test", "dinner": "pancakes"}]}
+    valid_config = {
+        "current": "test",
+        "profiles": [
+            {"name": "test", "dinner": "pancakes"},
+            {"name": "test2", "dinner": "pizza"},
+        ],
+    }
 
     mocked_get_config_file = mocker.patch("ali.helpers.auth._get_config_file_contents")
     mocked_get_config_file.return_value = json.dumps(valid_config)
 
     found = auth.extract_profile()
 
-    assert found == None
-
-    found = auth.extract_profile("test")
     assert found["dinner"] == "pancakes"
+
+    found = auth.extract_profile("test2")
+    assert found["dinner"] == "pizza"
 
     with pytest.raises(Exception):
         invalid_config = {}
@@ -25,24 +34,25 @@ def test_extract_profile(mocker):
         auth.extract_profile()
 
 
-def test_extract_credentials():
-    valid_profile_obj = {
-        "access_key_id": "1234567890",
-        "access_key_secret": "abcdefgh",
-        "region_id": "home-sweet-home",
-    }
+def test_get_client_for_profile(mocker):
+    client_spy = mocker.spy(AcsClient, "__init__")
 
-    access_key_id, access_key_secret, region_id = auth.extract_credentials(
-        valid_profile_obj
-    )
+    with pytest.raises(Exception) as e:
+        auth.get_client_for_profile({})
+        assert "invalid profile" in str(e)
 
-    assert access_key_id == "1234567890"
-    assert access_key_secret == "abcdefgh"
-    assert region_id == "home-sweet-home"
-
-    with pytest.raises(Exception):
-        invalid_profile_obj = {}
-        auth.extract_credentials(invalid_profile_obj)
+    auth.get_client_for_profile({
+        "mode": "AK",
+        "access_key_id": "test-1",
+        "access_key_secret": "test-2",
+        "region_id": "cn-shanghai"
+    })
+    client_spy.assert_called_once()
+    args = client_spy.call_args[1]
+    
+    assert args["region_id"] == "cn-shanghai"
+    assert args["credential"].access_key_id == "test-1"
+    assert args["credential"].access_key_secret == "test-2"
 
 
 def test_get_config_file_contents(tmpdir, mocker):

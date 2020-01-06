@@ -32,8 +32,7 @@ def cli(ctx, profile, version):
             "Could not locate credentials for Alibaba Cloud. Please run 'aliyun configure --profile <profile>' to set these up for a given profile."
         )
 
-    access_key_id, access_key_secret, region_id = auth.extract_credentials(profile_obj)
-    client = AcsClient(access_key_id, access_key_secret, region_id)
+    client = auth.get_client_for_profile(profile_obj)
     ctx.obj = {"client": client}
 
 

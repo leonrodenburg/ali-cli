@@ -75,7 +75,7 @@ class BatchReceiveMessageRequest(BaseRequest):
     def __init__(self, queue_name, num_of_messages=16, wait_seconds=10):
         super().__init__(
             path="/queues/%s/messages?numOfMessages=%s&waitseconds=%s"
-                 % (queue_name, num_of_messages, wait_seconds),
+            % (queue_name, num_of_messages, wait_seconds),
             method="GET",
         )
 
@@ -91,7 +91,7 @@ class BatchPeekMessageRequest(BaseRequest):
     def __init__(self, queue_name, num_of_messages=16):
         super().__init__(
             path="/queues/%s/messages?peekonly=true&numOfMessages=%s"
-                 % (queue_name, num_of_messages),
+            % (queue_name, num_of_messages),
             method="GET",
         )
 
