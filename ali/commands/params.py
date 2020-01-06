@@ -2,7 +2,7 @@ import json
 
 import click
 import oss2
-from oss2.exceptions import NoSuchKey, NoSuchBucket, Conflict, NotFound
+from oss2.exceptions import NoSuchKey, NoSuchBucket, Conflict, NotFound, AccessDenied
 from oss2.models import ServerSideEncryptionRule, SERVER_SIDE_ENCRYPTION_KMS
 
 from ali.helpers.output import output_json
@@ -82,7 +82,11 @@ def get(obj, namespace, path, format):
         meta = bucket.head_object(path)
     except NotFound:
         raise Exception(
-            "Parameter with path '%s' not found in namespace '%s'" % (path, namespace)
+            "Parameter '%s' not found in namespace '%s'" % (path, namespace)
+        )
+    except AccessDenied:
+        raise Exception(
+            "Parameter '%s' in namespace '%s' does not belong to you (permission denied)" % (path, namespace)
         )
 
     if (
@@ -120,7 +124,11 @@ def delete(obj, namespace, path):
         meta = bucket.head_object(path)
     except NotFound:
         raise Exception(
-            "Parameter with path '%s' not found in namespace '%s'" % (path, namespace)
+            "Parameter '%s' not found in namespace '%s'" % (path, namespace)
+        )
+    except AccessDenied:
+        raise Exception(
+            "Parameter '%s' in namespace '%s' does not belong to you (permission denied)" % (path, namespace)
         )
 
     if meta.headers["x-oss-meta-ali-param"] != "1":
