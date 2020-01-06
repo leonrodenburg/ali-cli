@@ -20,7 +20,7 @@ setuptools.setup(
         "click==7.0",
         "colorama==0.4.1",
         "pygments==2.4.2",
-        "ruamel.yaml==0.16.2",
+        "ruamel.yaml==0.16.5",
         "xmltodict==0.12.0",
         "requests==2.22.0",
         "urllib3==1.25.3",
