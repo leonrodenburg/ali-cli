@@ -1,22 +1,17 @@
 import os
-import click
 import tempfile
-
 from unittest import mock
+
 from click.testing import CliRunner
 from cryptography.fernet import Fernet
 
 from ali.commands.crypto.oss import group
 
-
-mock_obj = {"client": {}}
+mock_obj = {"client": {}, "region_id": "cn-shanghai", "credentials": {}}
 mock_bucket = mock.MagicMock()
 
 
-@mock.patch(
-    "ali.commands.crypto.oss._get_oss_bucket",
-    new=mock.MagicMock(return_value=mock_bucket),
-)
+@mock.patch("ali.commands.crypto.oss.get_bucket", new=mock.MagicMock(return_value=mock_bucket))
 @mock.patch("ali.commands.crypto.oss.Fernet")
 def test_upload(mock_fernet):
     fernet = mock_fernet.return_value

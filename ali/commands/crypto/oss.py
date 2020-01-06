@@ -1,9 +1,11 @@
 import os
-import click
-import oss2
-import humanize
 
+import click
+import humanize
+import oss2
 from cryptography.fernet import Fernet
+
+from ali.helpers.oss import get_bucket
 
 
 @click.group()
@@ -101,7 +103,7 @@ def upload(obj, url1, url2, keyfile, recursive):
             else bucket_path
         ).lstrip("/")
 
-        bucket = _get_oss_bucket(bucket_name, obj["client"])
+        bucket = get_bucket(bucket_name, obj)
 
         with open(file, "rb") as local_file:
             decrypted = local_file.read()
@@ -150,7 +152,7 @@ def download(obj, url1, url2, keyfile, recursive):
 
     bucket_name = url1.replace("oss://", "").split("/")[0]
     bucket_path = "/".join(url1.replace("oss://", "").split("/")[1:])
-    bucket = _get_oss_bucket(bucket_name, obj["client"])
+    bucket = get_bucket(bucket_name, obj)
 
     remote_files = []
     if bucket_path == "" or bucket_path.endswith("/"):
@@ -195,13 +197,6 @@ def download(obj, url1, url2, keyfile, recursive):
                 humanize.naturalsize(len(decrypted), binary=True),
             )
         )
-
-
-def _get_oss_bucket(bucket_name, client):
-    auth = oss2.Auth(client.get_access_key(), client.get_access_secret())
-    return oss2.Bucket(
-        auth, "http://oss-%s.aliyuncs.com" % (client.get_region_id()), bucket_name
-    )
 
 
 def _read_keyfile(keyfile):

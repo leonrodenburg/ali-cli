@@ -1,10 +1,6 @@
 import json
-from unittest import mock
 
-import aliyunsdkcore
 import pytest
-from aliyunsdkcore.auth.credentials import AccessKeyCredential
-from aliyunsdkcore.client import AcsClient
 
 from ali.helpers import auth
 
@@ -34,25 +30,27 @@ def test_extract_profile(mocker):
         auth.extract_profile()
 
 
-def test_get_client_for_profile(mocker):
-    client_spy = mocker.spy(AcsClient, "__init__")
-
+def test_get_client_for_profile():
     with pytest.raises(Exception) as e:
-        auth.get_client_for_profile({})
+        auth.extract_credentials_for_profile({})
         assert "invalid profile" in str(e)
 
-    auth.get_client_for_profile({
-        "mode": "AK",
-        "access_key_id": "test-1",
-        "access_key_secret": "test-2",
-        "region_id": "cn-shanghai"
-    })
-    client_spy.assert_called_once()
-    args = client_spy.call_args[1]
-    
-    assert args["region_id"] == "cn-shanghai"
-    assert args["credential"].access_key_id == "test-1"
-    assert args["credential"].access_key_secret == "test-2"
+    result = auth.extract_credentials_for_profile(
+        {"mode": "AK", "access_key_id": "test-1", "access_key_secret": "test-2"}
+    )
+
+    assert result.access_key_id == "test-1"
+    assert result.access_key_secret == "test-2"
+
+
+def test_get_region_id_for_profile():
+    with pytest.raises(Exception) as e:
+        auth.extract_region_id_from_profile({})
+        assert "invalid profile" in str(e)
+
+    result = auth.extract_region_id_from_profile({"region_id": "cn-shanghai"})
+
+    assert result == "cn-shanghai"
 
 
 def test_get_config_file_contents(tmpdir, mocker):

@@ -7,8 +7,8 @@ from ali.commands.configure import configure
 from ali.commands.crypto import crypto
 from ali.commands.kms import kms
 from ali.commands.mns import mns
-from ali.commands.ros import ros
 from ali.commands.params import params
+from ali.commands.ros import ros
 from ali.helpers import auth
 from ali.helpers.output import output_error
 
@@ -32,8 +32,13 @@ def cli(ctx, profile, version):
             "Could not locate credentials for Alibaba Cloud. Please run 'aliyun configure --profile <profile>' to set these up for a given profile."
         )
 
-    client = auth.get_client_for_profile(profile_obj)
-    ctx.obj = {"client": client}
+    credentials = auth.extract_credentials_for_profile(profile_obj)
+    region_id = auth.extract_region_id_from_profile(profile_obj)
+    ctx.obj = {
+        "client": AcsClient(region_id=region_id, credential=credentials),
+        "region_id": region_id,
+        "credentials": credentials,
+    }
 
 
 cli.add_command(configure)

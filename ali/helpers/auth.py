@@ -7,7 +7,6 @@ from aliyunsdkcore.auth.credentials import (
     RamRoleArnCredential,
     AccessKeyCredential,
 )
-from aliyunsdkcore.client import AcsClient
 
 
 def extract_profile(profile=""):
@@ -27,31 +26,38 @@ def extract_profile(profile=""):
         )
 
 
-def get_client_for_profile(profile):
+def extract_credentials_for_profile(profile):
     if profile["mode"] == "AK":
-        creds = AccessKeyCredential(
+        return AccessKeyCredential(
             profile["access_key_id"], profile["access_key_secret"]
         )
     elif profile["mode"] == "StsToken":
-        creds = StsTokenCredential(
+        return StsTokenCredential(
             profile["access_key_id"], profile["access_key_secret"], profile["sts_token"]
         )
     elif profile["mode"] == "RamRoleArn":
-        creds = RamRoleArnCredential(
+        return RamRoleArnCredential(
             profile["access_key_id"],
             profile["access_key_secret"],
             profile["ram_role_arn"],
             profile["ram_role_name"],
         )
     elif profile["mode"] == "EcsRamRole":
-        creds = EcsRamRoleCredential(profile["ram_role_name"])
+        return EcsRamRoleCredential(profile["ram_role_name"])
     else:
         raise Exception(
             "Tried to extract credentials from invalid profile: '%s'"
             % (profile["name"])
         )
 
-    return AcsClient(region_id=profile["region_id"], credential=creds)
+
+def extract_region_id_from_profile(profile):
+    if "region_id" in profile:
+        return profile["region_id"]
+
+    raise Exception(
+        "Tried to extract region from invalid profile: '%s'" % profile["name"]
+    )
 
 
 def _get_config_file_contents():

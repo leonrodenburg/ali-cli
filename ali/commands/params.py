@@ -1,10 +1,11 @@
 import json
 
 import click
-import oss2
-from oss2.exceptions import NoSuchKey, NoSuchBucket, Conflict, NotFound, AccessDenied
+from oss2.exceptions import NoSuchKey, NoSuchBucket, NotFound, AccessDenied
+from oss2.headers import RequestHeader
 from oss2.models import ServerSideEncryptionRule, SERVER_SIDE_ENCRYPTION_KMS
 
+from ali.helpers.oss import get_bucket
 from ali.helpers.output import output_json
 
 
@@ -34,7 +35,7 @@ def params():
 @click.pass_obj
 def put(obj, namespace, path, data, force):
     """Write a custom parameter to a namespace"""
-    bucket = _get_oss_bucket(namespace, obj["client"])
+    bucket = get_bucket(namespace, obj)
 
     try:
         bucket.get_bucket_info()
@@ -43,20 +44,23 @@ def put(obj, namespace, path, data, force):
         bucket.put_bucket_encryption(
             ServerSideEncryptionRule(SERVER_SIDE_ENCRYPTION_KMS)
         )
-    except Conflict:
-        raise Exception("Namespace '%s' already taken" % bucket.bucket_name)
+    except AccessDenied:
+        raise Exception("Namespace does not belong to you (permission denied)")
 
     try:
         object_meta = bucket.get_object_meta(path)
         if not force and object_meta:
             raise Exception(
-                "Parameter with path '%s' in namespace '%s' already exists (use --force to override)"
+                "Parameter '%s' in namespace '%s' already exists (use --force to override)"
                 % (path, bucket.bucket_name)
             )
     except NoSuchKey:
         pass
 
-    bucket.put_object(path, data, headers={"x-oss-meta-ali-param": "1"})
+    headers = RequestHeader()
+    headers.set_server_side_encryption(SERVER_SIDE_ENCRYPTION_KMS)
+    headers["x-oss-meta-ali-param"] = "1"
+    bucket.put_object(path, data, headers=headers)
 
     response = {"Namespace": namespace, "Path": path}
     output_json(json.dumps(response))
@@ -76,7 +80,7 @@ def put(obj, namespace, path, data, force):
 @click.pass_obj
 def get(obj, namespace, path, format):
     """Get the value of a parameter from a namespace"""
-    bucket = _get_oss_bucket(namespace, obj["client"])
+    bucket = get_bucket(namespace, obj)
 
     try:
         meta = bucket.head_object(path)
@@ -86,7 +90,8 @@ def get(obj, namespace, path, format):
         )
     except AccessDenied:
         raise Exception(
-            "Parameter '%s' in namespace '%s' does not belong to you (permission denied)" % (path, namespace)
+            "Parameter '%s' in namespace '%s' does not belong to you (permission denied)"
+            % (path, namespace)
         )
 
     if (
@@ -118,7 +123,7 @@ def get(obj, namespace, path, format):
 @click.pass_obj
 def delete(obj, namespace, path):
     """Delete a custom parameter from a namespace"""
-    bucket = _get_oss_bucket(namespace, obj["client"])
+    bucket = get_bucket(namespace, obj)
 
     try:
         meta = bucket.head_object(path)
@@ -128,17 +133,11 @@ def delete(obj, namespace, path):
         )
     except AccessDenied:
         raise Exception(
-            "Parameter '%s' in namespace '%s' does not belong to you (permission denied)" % (path, namespace)
+            "Parameter '%s' in namespace '%s' does not belong to you (permission denied)"
+            % (path, namespace)
         )
 
     if meta.headers["x-oss-meta-ali-param"] != "1":
         raise Exception("Cannot delete parameter that was not created through Ali CLI")
 
     bucket.delete_object(path)
-
-
-def _get_oss_bucket(bucket_name, client):
-    auth = oss2.Auth(client.get_access_key(), client.get_access_secret())
-    return oss2.Bucket(
-        auth, "http://oss-%s.aliyuncs.com" % (client.get_region_id()), bucket_name
-    )
