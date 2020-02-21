@@ -17,7 +17,6 @@ ali-cli = {editable = true,path = "."}
 
 [packages]
 ali-cli = {editable = true,path = "."}
-ruamel-yaml = "==0.16.5"
 
 [requires]
 python_version = "3.7"

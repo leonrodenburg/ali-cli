@@ -4,6 +4,7 @@ import click
 from aliyunsdkcore.client import AcsClient
 
 from ali.commands.configure import configure
+from ali.commands.cr import cr
 from ali.commands.crypto import crypto
 from ali.commands.kms import kms
 from ali.commands.mns import mns
@@ -42,6 +43,7 @@ def cli(ctx, profile, version):
 
 
 cli.add_command(configure)
+cli.add_command(cr)
 cli.add_command(crypto)
 cli.add_command(kms)
 cli.add_command(mns)

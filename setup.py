@@ -30,6 +30,7 @@ setuptools.setup(
         "aliyun-python-sdk-ros>=2.2.8",
         "aliyun-python-sdk-kms>=2.5.0",
         "aliyun-python-sdk-sts>=3.0.1",
+        "aliyun-python-sdk-cr>=3.0.1",
         "oss2>=2.8.0",
     ],
 )

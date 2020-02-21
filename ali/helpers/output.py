@@ -18,6 +18,10 @@ def output_json(json):
     )
 
 
+def output_text(output):
+    click.echo(output)
+
+
 def output_error(message):
     click.secho("Error: %s" % message, fg="red", bold=True)
 
