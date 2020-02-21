@@ -11,7 +11,9 @@ mock_obj = {"client": {}, "region_id": "cn-shanghai", "credentials": {}}
 mock_bucket = mock.MagicMock()
 
 
-@mock.patch("ali.commands.crypto.oss.get_bucket", new=mock.MagicMock(return_value=mock_bucket))
+@mock.patch(
+    "ali.commands.crypto.oss.get_bucket", new=mock.MagicMock(return_value=mock_bucket)
+)
 @mock.patch("ali.commands.crypto.oss.Fernet")
 def test_upload(mock_fernet):
     fernet = mock_fernet.return_value
