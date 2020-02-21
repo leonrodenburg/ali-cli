@@ -1,10 +1,10 @@
 import os
-import click
 
+import click
 from cryptography.fernet import Fernet
 
-from ali.helpers.output import output_success
 from ali.commands.crypto.oss import group
+from ali.helpers.output import output_success
 
 
 @click.group()

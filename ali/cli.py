@@ -1,6 +1,5 @@
-import sys
-
 import click
+import sys
 from aliyunsdkcore.client import AcsClient
 
 from ali.commands.configure import configure

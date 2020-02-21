@@ -46,7 +46,9 @@ def get_bucket(bucket_name, context):
                 "Unable to have ECS instance assume role: '%s'" % credentials.role_name
             )
         auth = oss2.StsAuth(
-            response["AccessKeyId"], response["AccessKeySecret"], response["SecurityToken"]
+            response["AccessKeyId"],
+            response["AccessKeySecret"],
+            response["SecurityToken"],
         )
     else:
         raise Exception(

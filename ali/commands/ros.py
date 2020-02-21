@@ -1,8 +1,8 @@
-import re
 import json
+import re
+from typing import NamedTuple
 
 import click
-from typing import NamedTuple
 from aliyunsdkros.request.v20150901 import (
     CreateStacksRequest,
     DeleteStackRequest,
@@ -12,8 +12,8 @@ from aliyunsdkros.request.v20150901 import (
     UpdateStackRequest,
 )
 
-from ali.helpers.template import template_to_string, load_template
 from ali.helpers.output import output_json, output_success
+from ali.helpers.template import template_to_string, load_template
 
 
 class RosParameter(NamedTuple):

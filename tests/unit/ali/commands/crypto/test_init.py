@@ -1,13 +1,9 @@
 import os
-import click
-import tempfile
-import shutil
-
 from unittest import mock
+
 from click.testing import CliRunner
 
 from ali.commands.crypto import crypto
-
 
 mock_obj = {"client": {}}
 

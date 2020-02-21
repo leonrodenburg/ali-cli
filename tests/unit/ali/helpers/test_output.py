@@ -1,5 +1,4 @@
 import json
-
 from unittest import mock
 
 from ali.helpers.output import output_success, output_json, output_error
