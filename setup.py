@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ali-cli",
-    version="0.7.1",
+    version="0.7.2",
     author="Léon Rodenburg",
     author_email="lrodenburg@xebia.com",
     keywords="alibaba cloud aliyun cli",
