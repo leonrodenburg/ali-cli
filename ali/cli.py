@@ -60,7 +60,7 @@ def safe_cli():
         cli(auto_envvar_prefix="ALI")
     except Exception as e:
         _handle_exception(e)
-        sys.exit()
+        sys.exit(1)
 
 
 if __name__ == "__main__":
