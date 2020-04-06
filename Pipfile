@@ -4,16 +4,15 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-black = "==19.3b0"
-pylint = "==2.3.1"
-pytest = "==5.0.1"
-rope = "==0.14.0"
-bumpversion = "==0.5.3"
-twine = "==1.13.0"
-pytest-cov = "==2.7.1"
-codecov = "==2.0.15"
-pytest-mock = "==1.10.4"
-ali-cli = {editable = true,path = "."}
+black = ">=19.3b0"
+pylint = ">=2.3.1"
+pytest = ">=5.0.1"
+rope = ">=0.14.0"
+bumpversion = ">=0.5.3"
+twine = ">=1.13.0"
+pytest-cov = ">=2.7.1"
+codecov = ">=2.0.15"
+pytest-mock = ">=1.10.4"
 
 [packages]
 ali-cli = {editable = true,path = "."}
